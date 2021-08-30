@@ -1,30 +1,37 @@
 //These are all of the utility functions to 
 //return the correct winning or losing message
 
+let gameResults;
+
 function playerWins(player, computer){
     let response = `Woohoo, ${player} beats ${computer}! You win!`;
     console.log(response);
-    return true;
+    gameResults=1;
+    return gameResults;
 }
 function playerLoses(player, computer){
     let response = `Aw shucks, ${computer} beats ${player}, the computer won!`;
     console.log(response);
-    return false;
+    gameResults=0;
+    return gameResults;
 }
 function tieGame(){
     let response = "It's a draw!";
     console.log(response);
-    return response;
+    gameResults=2;
+    return gameResults;
 }
 function incorrectInput(){
     let response = "This game is not that hard. Try again!";
     console.log(response);
-    return response;
+    gameResults=2;
+    return gameResults;
 }
 function cancelled(){
     let response="Goodbye!";
     console.log(response);
-    return response;
+    gameResults=2;
+    return gameResults;
 }
 //Randomizer function and single round function
 
@@ -60,27 +67,29 @@ function playRound(playerSelection, computerSelection){
         } else return playerWins(playerSelection, computerSelection);
     } else return incorrectInput();
 }
-
-
-//Only gives player points
-//Need to troubleshoot
-//Need to change end of game to also declare a winner!
-
+// plays 5 rounds and keeps track of points!
 
 function game(){
     let computerScore=0;
     let playerScore=0;
+    let emptyResults=0;
 
     for(let i=0; i<5; i++){
         
         playRound();
-        if (true){
+        if (gameResults===1){
             playerScore++;
-        } else if(false){
+        } else if(gameResults===0){
             computerScore++;
-        } else console.log('I need to fix this code');
+        } else emptyResults++;
     }
-    console.log(`Computer has ${computerScore} points. Player has ${playerScore} points.`);
+
+    if (playerScore === computerScore){
+        console.log(`Computer has ${computerScore} points. Player has ${playerScore} points. It\'s a tie!`);
+    } else if (playerScore < computerScore){
+        console.log(`Computer has ${computerScore} points. Player has ${playerScore} points. Better luck next time, computer wins`);
+    } else console.log(`Computer has ${computerScore} points. Player has ${playerScore} points. You win!!!!!!`);
+    
 }
 
 game();
