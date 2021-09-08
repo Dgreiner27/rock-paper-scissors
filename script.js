@@ -4,33 +4,39 @@
 let gameResults;
 
 function playerWins(player, computer){
+
+    results.textContent = `Woohoo, ${player} beats ${computer}! You win!`;
     let response = `Woohoo, ${player} beats ${computer}! You win!`;
     console.log(response);
     gameResults=1;
     return gameResults;
 }
 function playerLoses(player, computer){
+    results.textContent = `Aw shucks, ${computer} beats ${player}, the computer won!`;
     let response = `Aw shucks, ${computer} beats ${player}, the computer won!`;
     console.log(response);
     gameResults=0;
     return gameResults;
 }
 function tieGame(){
+    results.textContent = "It's a draw!";
     let response = "It's a draw!";
     console.log(response);
     gameResults=2;
     return gameResults;
 }
 function incorrectInput(){
+    results.textContent = "This game is not that hard. Try again!";
     let response = "This game is not that hard. Try again!";
     console.log(response);
-    gameResults=2;
+    gameResults=3;
     return gameResults;
 }
 function cancelled(){
-    let response="Goodbye!";
+    results.textContent = "Goodbye!";
+    let response = "Goodbye!";
     console.log(response);
-    gameResults=2;
+    gameResults=4;
     return gameResults;
 }
 //Randomizer function and single round function
@@ -45,9 +51,9 @@ function computerPlay() {
         return compAnswer[1];
     } else return compAnswer[2];
 }
-function playRound(playerSelection, computerSelection){
-    playerSelection=prompt("Let\'s play rock, paper scissors!");
-    computerSelection=computerPlay();
+function playRound(playerSelection){
+    //playerSelection=prompt("Let\'s play rock, paper scissors!");
+    let computerSelection=computerPlay();
     
     if(playerSelection===null){
         return cancelled();
@@ -67,7 +73,60 @@ function playRound(playerSelection, computerSelection){
         } else return playerWins(playerSelection, computerSelection);
     } else return incorrectInput();
 }
+
+
+//UI FUNCTIONALITY
+
+
+const rock = document.querySelector('#rock');
+rock.addEventListener('click', () => {
+    playRound("rock");
+});
+
+const paper = document.querySelector('#paper');
+paper.addEventListener('click', () => {
+    playRound("paper");
+});
+
+const scissors = document.querySelector('#scissors');
+scissors.addEventListener('click', () => {
+    playRound("scissors");
+});
+
+const results = document.querySelector('#results');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//THIS IS THE ORIGINAL LOGIC THAT PLAYS 5 GAMES IN THE CONSOLE.
+//REMOVING TO START ADDING IN A UI
+//
+//
+//
+/*
 // plays 5 rounds and keeps track of points!
+
 
 function game(){
     let computerScore=0;
@@ -93,3 +152,5 @@ function game(){
 }
 
 game();
+
+*/
