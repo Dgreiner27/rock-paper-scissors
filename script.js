@@ -52,22 +52,27 @@ function computerPlay() {
     } else return compAnswer[2];
 }
 function playRound(playerSelection){
-    //playerSelection=prompt("Let\'s play rock, paper scissors!");
+
+    
     let computerSelection=computerPlay();
+
+
+  
+    
     
     if(playerSelection===null){
         return cancelled();
-    } else if(playerSelection.toLowerCase()===computerSelection){
+    } else if(playerSelection===computerSelection){
         return tieGame();
-    } else if (playerSelection.toLowerCase()==="rock"){
+    } else if (playerSelection==="rock"){
         if(computerSelection==="paper"){
             return playerLoses(playerSelection, computerSelection);
         } else return playerWins(playerSelection, computerSelection);
-    } else if(playerSelection.toLowerCase()==="paper"){
+    } else if(playerSelection==="paper"){
         if(computerSelection==="rock"){
             return playerWins(playerSelection, computerSelection);
         } else return playerLoses(playerSelection, computerSelection);
-    } else if(playerSelection.toLowerCase()==="scissors"){
+    } else if(playerSelection==="scissors"){
         if(computerSelection==="rock"){
             return playerLoses(playerSelection, computerSelection);
         } else return playerWins(playerSelection, computerSelection);
@@ -79,26 +84,46 @@ function playRound(playerSelection){
 
 
 const rock = document.querySelector('#rock');
-rock.addEventListener('click', () => {
-    playRound("rock");
-});
-
 const paper = document.querySelector('#paper');
-paper.addEventListener('click', () => {
-    playRound("paper");
-});
-
 const scissors = document.querySelector('#scissors');
-scissors.addEventListener('click', () => {
-    playRound("scissors");
-});
-
 const results = document.querySelector('#results');
+const playerPoints = document.querySelector('#playerPoints');
+const computerPoints = document.querySelector('#computerPoints');
 
 
 
+function game(){
+    let computerScore=0;
+    let playerScore=0;
+    let emptyResults=0;
 
+    rock.addEventListener('click', () => {
+        playRound("rock");
+    });
+  
+    scissors.addEventListener('click', () => {
+        playRound("scissors");
+    });
 
+    paper.addEventListener('click', () => {
+        playRound("paper");
+    });
+
+    for(let i = 0; i <5; i++){
+
+        playerPoints.textContent = `Player: ${playerScore}`;
+        computerPoints.textContent = `Computer: ${computerScore}`;
+
+        playRound();
+        if (gameResults===1){
+            playerScore++;
+        } else if(gameResults===0){
+            computerScore++;
+        } else emptyResults++;
+    }
+}
+
+game();
 
 
 
