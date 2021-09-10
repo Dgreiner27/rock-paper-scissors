@@ -2,6 +2,9 @@
 //return the correct winning or losing message
 
 let gameResults;
+let computerScore=0;
+let playerScore=0;
+let emptyResults=0; 
 
 function playerWins(player, computer){
 
@@ -39,6 +42,17 @@ function cancelled(){
     gameResults=4;
     return gameResults;
 }
+function announceWinner() {
+    if (playerScore > computerScore) {
+        results.textContent = "Player Wins!";
+    } else results.textContent = "Computer Wins!";
+
+    computerScore = 0;
+    playerScore = 0;
+
+
+}
+
 //Randomizer function and single round function
 
 function computerPlay() {
@@ -55,11 +69,7 @@ function playRound(playerSelection){
 
     
     let computerSelection=computerPlay();
-
-
-  
-    
-    
+        
     if(playerSelection===null){
         return cancelled();
     } else if(playerSelection===computerSelection){
@@ -83,99 +93,34 @@ function playRound(playerSelection){
 //UI FUNCTIONALITY
 
 
-const rock = document.querySelector('#rock');
-const paper = document.querySelector('#paper');
-const scissors = document.querySelector('#scissors');
+const buttons = document.querySelectorAll('.button');
 const results = document.querySelector('#results');
 const playerPoints = document.querySelector('#playerPoints');
 const computerPoints = document.querySelector('#computerPoints');
 
 
 
-function game(){
-    let computerScore=0;
-    let playerScore=0;
-    let emptyResults=0;
-
-    rock.addEventListener('click', () => {
-        playRound("rock");
-    });
-  
-    scissors.addEventListener('click', () => {
-        playRound("scissors");
-    });
-
-    paper.addEventListener('click', () => {
-        playRound("paper");
-    });
-
-    for(let i = 0; i <5; i++){
-
-        playerPoints.textContent = `Player: ${playerScore}`;
-        computerPoints.textContent = `Computer: ${computerScore}`;
-
-        playRound();
+function game(playerSelection){
+         playRound(playerSelection);
         if (gameResults===1){
             playerScore++;
         } else if(gameResults===0){
             computerScore++;
         } else emptyResults++;
-    }
-}
-
-game();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//THIS IS THE ORIGINAL LOGIC THAT PLAYS 5 GAMES IN THE CONSOLE.
-//REMOVING TO START ADDING IN A UI
-//
-//
-//
-/*
-// plays 5 rounds and keeps track of points!
-
-
-function game(){
-    let computerScore=0;
-    let playerScore=0;
-    let emptyResults=0;
-
-    for(let i=0; i<5; i++){
-        
-        playRound();
-        if (gameResults===1){
-            playerScore++;
-        } else if(gameResults===0){
-            computerScore++;
-        } else emptyResults++;
-    }
-
-    if (playerScore === computerScore){
-        console.log(`Computer has ${computerScore} points. Player has ${playerScore} points. It\'s a tie!`);
-    } else if (playerScore < computerScore){
-        console.log(`Computer has ${computerScore} points. Player has ${playerScore} points. Better luck next time, computer wins`);
-    } else console.log(`Computer has ${computerScore} points. Player has ${playerScore} points. You win!!!!!!`);
     
+    playerPoints.textContent = `Player: ${playerScore}`;
+    computerPoints.textContent = `Computer: ${computerScore}`;
 }
 
-game();
 
-*/
+
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const playerButtonClicked = button.textContent.toLowerCase();
+        game(playerButtonClicked);
+
+        if (playerScore === 5 || computerScore ===5){
+            announceWinner();
+        }
+    });
+});
